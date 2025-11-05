@@ -1,7 +1,7 @@
 "id": "./",
   "name": "Sijiwa",
   "short_name": "Sijiwa",
-  "description": "Sijiwa adalah aplikasi kesehatan mental yang membantu pengguna menjaga keseimbangan emosi dan memahami diri. melalui fitur seperti, quiz , diary, konseling online dan ruang tenang. Dengan fitur tersebut pengguna dengan gangguan kesehatan mental bipolar dapat terbantu. Aplikasi Sijiwa ditujukan untuk semua kalangan terutama remaja, mahasiswa, dan masyarakat umum yang ingin menjaga kesehatan mental, mengelola stres, serta menemukan ruang aman untuk menenangkan pikiran.
+  "description": "Sijiwa adalah aplikasi kesehatan mental yang membantu pengguna menjaga keseimbangan emosi dan memahami diri. melalui fitur seperti, quiz , diary, konseling online dan ruang tenang. Dengan fitur tersebut pengguna dengan gangguan kesehatan mental bipolar dapat terbantu. Aplikasi Sijiwa ditujukan untuk semua kalangan terutama remaja, mahasiswa, dan masyarakat umum yang ingin menjaga kesehatan mental, mengelola stres, serta menemukan ruang aman untuk menenangkan pikiran.
 ",
   "start_url": "./index.html",
   "scope": "./",
