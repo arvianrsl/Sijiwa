@@ -3,1592 +3,1236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#00CCFF">
-    <meta name="description" content="Sijiwa - Aplikasi Kesehatan Mental untuk Keseimbangan Emosi">
-    <title>Sijiwa - Mental Health App</title>
+    <title>Sijiwa - Kesehatan Mental</title>
     
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- Font Awesome 7 -->
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts - Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Anime.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlNpaml3YSAtIEtlc2VoYXRhbiBNZW50YWwiLAogICJzaG9ydF9uYW1lIjogIlNpaml3YSIsCiAgImRlc2NyaXB0aW9uIjogIkFwbGlrYXNpIEtlc2VoYXRhbiBNZW50YWwgdW50dWsgS2VzZWltYmFuZ2FuIEVtb3NpIiwKICAic3RhcnRfdXJsIjogIi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNFNUUxRDAiLAogICJ0aGVtZV9jb2xvciI6ICIjMDBDQ0ZGIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTVRJNElpQm9aV2xuYUhROUlqRXlPQ0lnZG1sbGQwSnZlRDBpTUNBd0lERXlPQ0F4TWpnaUlIaHRiRzV6UFNKb2RIUndPaTh2ZDNkM0xuY3pMbTl5Wnk4eU1EQXdMM04yWnlJK1BHTnBjbU5zWlNCamVEMGlOalFpSUdONVBTSTJOQ0lnY2owaU5UQWlJR1pwYkd3OUlpTXdNRU5EVEVZAUZ2UEM5amFYSmpiR1UrUEM5emRtYysiLAogICAgICAic2l6ZXMiOiAiMTI4eDEyOCIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXQp9">
-    
     <style>
+        :root {
+            --primary-color: #2BB0ED;
+            --secondary-color: #EAF6FD;
+            --accent-color: #1B6CA8;
+            --neutral-color: #FFFFFF;
+            --text-color: #333333;
+            --border-radius: 12px;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
-        :root {
-            --bg-cream: #E5E1D0;
-            --blue-fresh: #00CCFF;
-            --blue-light: #D2F7FF;
-            --text-dark: #333;
-            --text-light: #666;
-        }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-cream);
-            overflow-x: hidden;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            padding-bottom: 80px;
         }
-        
-        /* Splash Screen */
-        #splashScreen {
+
+        body.dark-mode {
+            --secondary-color: #1a1a1a;
+            --neutral-color: #2d2d2d;
+            --text-color: #e0e0e0;
+            background-color: var(--secondary-color);
+        }
+
+        .header {
+            background: var(--neutral-color);
+            padding: 15px 20px;
+            box-shadow: var(--shadow);
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100vh;
-            background: linear-gradient(135deg, var(--blue-fresh) 0%, var(--blue-light) 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        
-        .splash-logo {
-            font-size: 4rem;
-            color: white;
-            margin-bottom: 1rem;
-        }
-        
-        .splash-text {
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: white;
-        }
-        
-        /* Main App */
-        #mainApp {
-            display: none;
-            padding-bottom: 80px;
-        }
-        
-        /* Header */
-        .app-header {
-            background: linear-gradient(135deg, var(--blue-fresh) 0%, var(--blue-light) 100%);
-            color: white;
-            padding: 1.5rem 1rem;
-            border-radius: 0 0 24px 24px;
-            margin-bottom: 1.5rem;
-        }
-        
-        .greeting {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        
-        .greeting-sub {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        
-        /* Feature Cards */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            padding: 0 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .feature-card {
-            background: white;
-            border-radius: 20px;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,204,255,0.2);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, var(--blue-fresh), var(--blue-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .feature-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-        
-        /* Section */
-        .section {
-            padding: 0 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        /* Quote Card */
-        .quote-card {
-            background: linear-gradient(135deg, var(--blue-fresh) 0%, var(--blue-light) 100%);
-            border-radius: 20px;
-            padding: 1.5rem;
-            color: white;
-            margin-bottom: 1.5rem;
-        }
-        
-        .quote-text {
-            font-size: 1.1rem;
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-        
-        .quote-actions {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .btn-quote {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 12px;
-            font-size: 0.9rem;
-        }
-        
-        /* Article Card */
-        .article-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom: 1rem;
-        }
-        
-        .article-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: var(--blue-light);
-        }
-        
-        .article-content {
-            padding: 1rem;
-        }
-        
-        .article-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        
-        .article-desc {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-bottom: 0.8rem;
-        }
-        
-        /* Doctor Card */
-        .doctor-card {
-            background: white;
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        
-        .doctor-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .doctor-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--blue-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: var(--blue-fresh);
-            position: relative;
-        }
-        
-        .camera-badge {
-            position: absolute;
-            bottom: 0;
             right: 0;
-            background: var(--blue-fresh);
-            color: white;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
+            gap: 8px;
         }
-        
-        .doctor-info h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.2rem;
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
         }
-        
-        .doctor-spec {
-            font-size: 0.85rem;
-            color: var(--text-light);
+
+        .header-actions i {
+            font-size: 20px;
+            color: var(--accent-color);
+            cursor: pointer;
+            transition: color 0.3s;
         }
-        
-        .doctor-availability {
-            font-size: 0.85rem;
-            color: var(--blue-fresh);
-            margin-bottom: 1rem;
+
+        .header-actions i:hover {
+            color: var(--primary-color);
         }
-        
-        /* Bottom Navigation */
+
+        .main-content {
+            margin-top: 70px;
+            padding: 20px;
+            min-height: calc(100vh - 150px);
+        }
+
+        .card-custom {
+            background: var(--neutral-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+
+        .btn-primary-custom {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: white;
-            border-radius: 24px 24px 0 0;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
-            padding: 1rem 0;
-            z-index: 1000;
-        }
-        
-        .nav-items {
+            background: var(--neutral-color);
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
             display: flex;
             justify-content: space-around;
-            align-items: center;
+            padding: 10px 0;
+            z-index: 1000;
         }
-        
+
         .nav-item {
-            text-align: center;
-            cursor: pointer;
-            flex: 1;
-            padding: 0.5rem;
-            transition: all 0.3s;
-        }
-        
-        .nav-item.active .nav-icon {
-            color: var(--blue-fresh);
-        }
-        
-        .nav-item.active .nav-label {
-            color: var(--blue-fresh);
-        }
-        
-        .nav-icon {
-            font-size: 1.5rem;
-            color: var(--text-light);
-            margin-bottom: 0.3rem;
-        }
-        
-        .nav-label {
-            font-size: 0.75rem;
-            color: var(--text-light);
-        }
-        
-        /* Pages */
-        .page {
-            display: none;
-            animation: fadeIn 0.3s;
-        }
-        
-        .page.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Quiz Page */
-        .quiz-container {
-            padding: 2rem 1rem;
-        }
-        
-        .quiz-question {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        
-        .question-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-        
-        .quiz-options {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-        }
-        
-        .quiz-option {
-            background: var(--bg-cream);
-            border: 2px solid transparent;
-            padding: 1rem;
-            border-radius: 12px;
+            align-items: center;
+            gap: 5px;
+            color: #999;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: color 0.3s;
+            padding: 5px 15px;
         }
-        
-        .quiz-option:hover, .quiz-option.selected {
-            border-color: var(--blue-fresh);
-            background: var(--blue-light);
+
+        .nav-item.active {
+            color: var(--primary-color);
         }
-        
-        /* Diary Page */
-        .diary-list {
-            padding: 1rem;
+
+        .nav-item i {
+            font-size: 22px;
         }
-        
-        .diary-item {
-            background: white;
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        
-        .diary-date {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-        }
-        
-        .diary-preview {
-            font-size: 0.95rem;
-            color: var(--text-dark);
-        }
-        
-        /* Music Player */
-        .music-player {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        
-        .playlist-item {
-            background: var(--bg-cream);
-            padding: 1rem;
-            border-radius: 12px;
-            margin-bottom: 0.8rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .playlist-item:hover {
-            background: var(--blue-light);
-        }
-        
-        /* Utility Classes */
-        .btn-primary-custom {
-            background: linear-gradient(135deg, var(--blue-fresh), var(--blue-light));
-            border: none;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 12px;
+
+        .nav-item span {
+            font-size: 11px;
             font-weight: 500;
         }
-        
-        .btn-primary-custom:hover {
-            opacity: 0.9;
-        }
-        
-        .fab-button {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--blue-fresh), var(--blue-light));
-            border-radius: 50%;
+
+        .auth-container {
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,204,255,0.3);
-            cursor: pointer;
-            z-index: 999;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
         }
-        
-        .modal-custom .modal-content {
-            border-radius: 20px;
+
+        .auth-box {
+            background: var(--neutral-color);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
         }
-        
-        .form-control, .form-select {
-            border-radius: 12px;
-            border: 1px solid #ddd;
-            padding: 0.8rem;
+
+        .auth-logo {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 30px;
         }
-        
-        textarea.form-control {
-            min-height: 150px;
-        }
-        
-        .badge-status {
-            padding: 0.4rem 0.8rem;
+
+        .form-control {
             border-radius: 8px;
-            font-size: 0.75rem;
+            border: 1px solid #ddd;
+            padding: 12px;
+            margin-bottom: 15px;
         }
-        
-        .history-card {
-            background: white;
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+        .doctor-card {
+            text-align: center;
         }
-        
-        .faq-item {
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 0.8rem;
-            overflow: hidden;
-        }
-        
-        .faq-question {
-            padding: 1rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
-        }
-        
-        .faq-answer {
-            padding: 0 1rem 1rem;
-            display: none;
-            color: var(--text-light);
-        }
-        
-        .faq-item.active .faq-answer {
+
+        .doctor-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid var(--primary-color);
             display: block;
+        }
+
+        .article-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+        }
+
+        .music-player {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .music-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .music-controls i {
+            font-size: 32px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .music-controls i:hover {
+            transform: scale(1.2);
+        }
+
+        .quiz-option {
+            background: var(--neutral-color);
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary-color);
+            background: var(--secondary-color);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .diary-entry {
+            background: var(--neutral-color);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .diary-date {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .feature-box {
+            background: var(--neutral-color);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+
+        .feature-box i {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .feature-box h5 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        @media (max-width: 576px) {
+            .auth-box {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Splash Screen -->
-    <div id="splashScreen">
-        <div class="splash-logo">
-            <i class="fas fa-brain"></i>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="auth-container">
+        <div class="auth-box">
+            <div class="auth-logo">
+                <i class="fas fa-brain"></i> Sijiwa
+            </div>
+            <h4 class="text-center mb-4">Masuk ke Akun Anda</h4>
+            <form id="loginForm">
+                <input type="email" class="form-control" id="loginEmail" placeholder="Email" required>
+                <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Ingat Saya</label>
+                </div>
+                <button type="submit" class="btn btn-primary-custom w-100 mb-3">Masuk</button>
+                <p class="text-center">Belum punya akun? <a href="#" id="showRegister" style="color: var(--primary-color); text-decoration: none;">Daftar</a></p>
+            </form>
         </div>
-        <div class="splash-text">Sijiwa</div>
     </div>
-    
+
+    <!-- Register Page -->
+    <div id="registerPage" class="auth-container hidden">
+        <div class="auth-box">
+            <div class="auth-logo">
+                <i class="fas fa-brain"></i> Sijiwa
+            </div>
+            <h4 class="text-center mb-4">Buat Akun Baru</h4>
+            <form id="registerForm">
+                <input type="text" class="form-control" id="registerName" placeholder="Nama Lengkap" required>
+                <input type="email" class="form-control" id="registerEmail" placeholder="Email" required>
+                <input type="password" class="form-control" id="registerPassword" placeholder="Password (min. 6 karakter)" required minlength="6">
+                <button type="submit" class="btn btn-primary-custom w-100 mb-3">Daftar</button>
+                <p class="text-center">Sudah punya akun? <a href="#" id="showLogin" style="color: var(--primary-color); text-decoration: none;">Masuk</a></p>
+            </form>
+        </div>
+    </div>
+
     <!-- Main App -->
-    <div id="mainApp">
-        <!-- Home Page -->
-        <div id="homePage" class="page active">
-            <div class="app-header">
-                <div class="greeting">Hai! 👋</div>
-                <div class="greeting-sub">Bagaimana perasaanmu hari ini?</div>
-                <img src="logo-sijiwa-192.png" 
-                     alt="Say Hello" 
-                     class="img-fluid rounded mt-3" 
-                     style="width: 100%; max-height: 150px; object-fit: cover;">
+    <div id="mainApp" class="hidden">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-brain"></i> Sijiwa
             </div>
-            
-            <!-- Feature Grid -->
-            <div class="section">
-                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=300&fit=crop" 
-                     alt="Dashboard Sijiwa" 
-                     class="img-fluid rounded mb-3" 
-                     style="width: 100%; max-height: 200px; object-fit: cover;">
+            <div class="header-actions">
+                <i class="fas fa-moon" id="darkModeToggle"></i>
             </div>
-            
-            <div class="feature-grid">
-                <div class="feature-card" onclick="navigateTo('quiz')">
-                    <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=200&h=150&fit=crop" 
-                         alt="Quiz" 
-                         class="img-fluid rounded mb-2" 
-                         style="width: 100%; height: 80px; object-fit: cover;">
-                    <div class="feature-icon">
-                        <i class="fas fa-clipboard-question"></i>
-                    </div>
-                    <div class="feature-title">Quiz</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Beranda Page -->
+            <div id="berandaPage" class="page">
+                <div class="welcome-section">
+                    <h2 id="welcomeText">Selamat Datang!</h2>
+                    <p>Mari jaga kesehatan mental Anda hari ini</p>
                 </div>
-                
-                <div class="feature-card" onclick="navigateTo('diary')">
-                    <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=200&h=150&fit=crop" 
-                         alt="Diary" 
-                         class="img-fluid rounded mb-2" 
-                         style="width: 100%; height: 80px; object-fit: cover;">
-                    <div class="feature-icon">
+
+                <div class="feature-grid">
+                    <div class="feature-box" onclick="navigateTo('diary')">
                         <i class="fas fa-book"></i>
+                        <h5>Diary Emosi</h5>
                     </div>
-                    <div class="feature-title">Diary</div>
+                    <div class="feature-box" onclick="navigateTo('quiz')">
+                        <i class="fas fa-clipboard-question"></i>
+                        <h5>Quiz Mental</h5>
+                    </div>
+                    <div class="feature-box" onclick="navigateTo('konseling')">
+                        <i class="fas fa-user-doctor"></i>
+                        <h5>Konseling</h5>
+                    </div>
+                    <div class="feature-box" onclick="navigateTo('artikel')">
+                        <i class="fas fa-newspaper"></i>
+                        <h5>Artikel</h5>
+                    </div>
                 </div>
+
+                <div class="card-custom">
+                    <h5><i class="fas fa-music"></i> Ruang Tenang</h5>
+                    <p class="mb-3">Dengarkan musik relaksasi untuk menenangkan pikiran Anda</p>
+                    <button class="btn btn-primary-custom" onclick="navigateTo('ruangtenang')">Mulai Relaksasi</button>
+                </div>
+            </div>
+
+            <!-- Diary Page -->
+            <div id="diaryPage" class="page hidden">
+                <h4 class="mb-4"><i class="fas fa-book"></i> Diary Emosi</h4>
+                <button class="btn btn-primary-custom mb-3" onclick="showAddDiary()">
+                    <i class="fas fa-plus"></i> Tambah Catatan
+                </button>
                 
-                <div class="feature-card" onclick="navigateTo('consultation')">
-                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&h=150&fit=crop" 
-                         alt="Konseling" 
-                         class="img-fluid rounded mb-2" 
-                         style="width: 100%; height: 80px; object-fit: cover;">
-                    <div class="feature-icon">
-                        <i class="fas fa-video"></i>
+                <div id="diaryList"></div>
+
+                <!-- Add Diary Modal -->
+                <div id="addDiaryModal" class="hidden">
+                    <div class="card-custom">
+                        <h5>Catatan Baru</h5>
+                        <textarea class="form-control mb-3" id="diaryContent" rows="5" placeholder="Tulis perasaan Anda hari ini..."></textarea>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary-custom" onclick="saveDiary()">Simpan</button>
+                            <button class="btn btn-secondary" onclick="cancelDiary()">Batal</button>
+                        </div>
                     </div>
-                    <div class="feature-title">Konseling</div>
                 </div>
+            </div>
+
+            <!-- Quiz Page -->
+            <div id="quizPage" class="page hidden">
+                <h4 class="mb-4"><i class="fas fa-clipboard-question"></i> Quiz Kesehatan Mental</h4>
                 
-                <div class="feature-card" onclick="navigateTo('music')">
-                    <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=200&h=150&fit=crop" 
-                         alt="Musik" 
-                         class="img-fluid rounded mb-2" 
-                         style="width: 100%; height: 80px; object-fit: cover;">
-                    <div class="feature-icon">
-                        <i class="fas fa-headphones"></i>
+                <div id="quizContent">
+                    <div class="card-custom">
+                        <h5 id="quizQuestion">Bagaimana perasaan Anda hari ini?</h5>
+                        <div id="quizOptions"></div>
+                        <button class="btn btn-primary-custom mt-3" onclick="nextQuestion()">Lanjut</button>
                     </div>
-                    <div class="feature-title">Ruang Tenang</div>
                 </div>
-            </div>
-            
-            <!-- Quote of the Day -->
-            <div class="section">
-                <div class="section-title">
-                    <i class="fas fa-quote-left"></i> Quote Harian
-                </div>
-                <div class="quote-card">
-                    <div class="quote-text" id="dailyQuote">
-                        "Kesehatan mental adalah bagian dari kesehatan secara keseluruhan. Jaga dirimu dengan baik."
-                    </div>
-                    <div class="quote-actions">
-                        <button class="btn btn-quote" onclick="saveQuote()">
-                            <i class="fas fa-bookmark"></i> Simpan
-                        </button>
-                        <button class="btn btn-quote" onclick="shareQuote()">
-                            <i class="fas fa-share"></i> Bagikan
-                        </button>
+
+                <div id="quizResult" class="hidden">
+                    <div class="card-custom text-center">
+                        <i class="fas fa-check-circle" style="font-size: 64px; color: var(--primary-color);"></i>
+                        <h4 class="mt-3">Hasil Quiz Anda</h4>
+                        <p id="quizResultText"></p>
+                        <button class="btn btn-primary-custom" onclick="restartQuiz()">Ulangi Quiz</button>
                     </div>
                 </div>
             </div>
-            
-            <!-- Articles -->
-            <div class="section">
-                <div class="section-title">
-                    <i class="fas fa-newspaper"></i> Artikel Kesehatan Mental
-                    <button class="btn btn-sm btn-primary-custom ms-auto" onclick="uploadArticlePhoto()">
-                        <i class="fas fa-upload"></i> Upload
-                    </button>
-                </div>
-                <div id="articleList"></div>
-            </div>
-            
-            <!-- Recent Consultations -->
-            <div class="section">
-                <div class="section-title">
-                    <i class="fas fa-history"></i> Riwayat Singkat
-                </div>
-                <div class="text-center">
-                    <button class="btn btn-primary-custom" onclick="navigateTo('history')">
-                        Lihat Semua Riwayat
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Quiz Page -->
-        <div id="quizPage" class="page">
-            <div class="app-header">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-arrow-left me-3" onclick="navigateTo('home')" style="cursor:pointer;"></i>
-                    <div class="greeting">Quiz Kesehatan Mental</div>
-                </div>
-            </div>
-            
-            <div class="quiz-container" id="quizContainer">
-                <div class="quiz-question">
-                    <div class="question-text" id="questionText"></div>
-                    <div class="quiz-options" id="quizOptions"></div>
-                </div>
-                <button class="btn btn-primary-custom w-100" id="nextQuizBtn" onclick="nextQuestion()">Selanjutnya</button>
-            </div>
-            
-            <div id="quizResult" style="display:none; padding: 2rem 1rem;">
-                <div class="quiz-question">
-                    <h3 class="text-center mb-3">Hasil Quiz Anda</h3>
-                    <div id="resultText" class="text-center mb-3"></div>
-                    <div id="recommendation" class="text-center"></div>
-                    <button class="btn btn-primary-custom w-100 mt-3" onclick="restartQuiz()">Ulangi Quiz</button>
-                    <button class="btn btn-outline-primary w-100 mt-2" onclick="navigateTo('home')">Kembali ke Beranda</button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Diary Page -->
-        <div id="diaryPage" class="page">
-            <div class="app-header">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-arrow-left me-3" onclick="navigateTo('home')" style="cursor:pointer;"></i>
-                    <div class="greeting">Diary Saya</div>
-                </div>
-            </div>
-            
-            <div class="diary-list" id="diaryList"></div>
-            
-            <div class="fab-button" onclick="showAddDiaryModal()">
-                <i class="fas fa-plus"></i>
-            </div>
-        </div>
-        
-        <!-- Consultation Page -->
-        <div id="consultationPage" class="page">
-            <div class="app-header">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-arrow-left me-3" onclick="navigateTo('home')" style="cursor:pointer;"></i>
-                    <div class="greeting">Konseling Online</div>
-                </div>
-            </div>
-            
-            <div class="section">
+
+            <!-- Konseling Page -->
+            <div id="konselingPage" class="page hidden">
+                <h4 class="mb-4"><i class="fas fa-user-doctor"></i> Konseling Online</h4>
                 <div id="doctorList"></div>
             </div>
-        </div>
-        
-        <!-- Music Page -->
-        <div id="musicPage" class="page">
-            <div class="app-header">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-arrow-left me-3" onclick="navigateTo('home')" style="cursor:pointer;"></i>
-                    <div class="greeting">Ruang Tenang</div>
-                </div>
+
+            <!-- Doctor Detail Page -->
+            <div id="doctorDetailPage" class="page hidden">
+                <button class="btn btn-secondary mb-3" onclick="backToKonseling()">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <div id="doctorDetail"></div>
             </div>
-            
-            <div class="music-player">
-                <h4 class="mb-3">Pilih Playlist Sesuai Mood</h4>
-                <div class="playlist-item" onclick="playPlaylist('calm')">
-                    <i class="fas fa-music me-2"></i> Calm - Musik Menenangkan
-                </div>
-                <div class="playlist-item" onclick="playPlaylist('stress')">
-                    <i class="fas fa-spa me-2"></i> Stress Release - Hilangkan Stres
-                </div>
-                <div class="playlist-item" onclick="playPlaylist('sad')">
-                    <i class="fas fa-cloud-rain me-2"></i> Sad but Safe - Aman dalam Kesedihan
-                </div>
-                <div class="playlist-item" onclick="playPlaylist('focus')">
-                    <i class="fas fa-brain me-2"></i> Focus Mode - Fokus & Produktif
-                </div>
+
+            <!-- Artikel Page -->
+            <div id="artikelPage" class="page hidden">
+                <h4 class="mb-4"><i class="fas fa-newspaper"></i> Artikel Kesehatan Mental</h4>
+                <div id="articleList"></div>
             </div>
-            
-            <div id="musicPlayerControl" style="display:none;" class="music-player mt-3">
-                <h5 id="currentPlaylist"></h5>
-                <p id="currentSong"></p>
-                <div class="d-flex justify-content-center gap-3 mt-3">
-                    <button class="btn btn-primary-custom" onclick="previousSong()">
-                        <i class="fas fa-backward"></i>
-                    </button>
-                    <button class="btn btn-primary-custom" id="playPauseBtn" onclick="togglePlayPause()">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    <button class="btn btn-primary-custom" onclick="nextSong()">
-                        <i class="fas fa-forward"></i>
-                    </button>
-                </div>
+
+            <!-- Article Detail Page -->
+            <div id="articleDetailPage" class="page hidden">
+                <button class="btn btn-secondary mb-3" onclick="backToArtikel()">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <div id="articleDetail"></div>
             </div>
-        </div>
-        
-        <!-- History Page -->
-        <div id="historyPage" class="page">
-            <div class="app-header">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-arrow-left me-3" onclick="navigateTo('home')" style="cursor:pointer;"></i>
-                    <div class="greeting">Riwayat Konsultasi</div>
+
+            <!-- Ruang Tenang Page -->
+            <div id="ruangtenangPage" class="page hidden">
+                <h4 class="mb-4"><i class="fas fa-music"></i> Ruang Tenang</h4>
+                <div class="music-player">
+                    <i class="fas fa-compact-disc fa-3x mb-3"></i>
+                    <h5 id="currentMusic">Musik Relaksasi 1</h5>
+                    <div class="music-controls">
+                        <i class="fas fa-backward" onclick="previousMusic()"></i>
+                        <i class="fas fa-play" id="playPauseBtn" onclick="toggleMusic()"></i>
+                        <i class="fas fa-forward" onclick="nextMusic()"></i>
+                    </div>
                 </div>
+                <audio id="audioPlayer">
+                    <source src="" type="audio/mpeg">
+                </audio>
             </div>
-            
-            <div class="section">
-                <ul class="nav nav-tabs mb-3" id="historyTabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#upcoming">Akan Datang</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#completed">Selesai</a>
-                    </li>
-                </ul>
+
+            <!-- Profil Page -->
+            <div id="profilPage" class="page hidden">
+                <h4 class="mb-4"><i class="fas fa-user"></i> Profil Saya</h4>
                 
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="upcoming">
-                        <div id="upcomingList"></div>
-                    </div>
-                    <div class="tab-pane fade" id="completed">
-                        <div id="completedList"></div>
+                <div class="card-custom text-center">
+                    <i class="fas fa-user-circle" style="font-size: 80px; color: var(--primary-color);"></i>
+                    <h5 class="mt-3" id="profileName">Nama User</h5>
+                    <p id="profileEmail">email@example.com</p>
+                </div>
+
+                <div class="card-custom">
+                    <h5><i class="fas fa-cog"></i> Pengaturan</h5>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span>Mode Gelap</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Profile/Settings Page -->
-        <div id="profilePage" class="page">
-            <div class="app-header">
-                <div class="greeting">Pengaturan</div>
-            </div>
-            
-            <div class="section">
-                <div class="section-title">
-                    <i class="fas fa-question-circle"></i> FAQ
+
+                <div class="card-custom">
+                    <h5><i class="fas fa-clock"></i> Aktivitas Terakhir</h5>
+                    <p class="mb-2"><i class="fas fa-book"></i> <span id="diaryCount">0</span> Catatan Diary</p>
+                    <p class="mb-0"><i class="fas fa-clipboard-check"></i> <span id="quizCount">0</span> Quiz Selesai</p>
                 </div>
-                <div id="faqList"></div>
-            </div>
-            
-            <div class="section mt-4">
-                <button class="btn btn-danger w-100" onclick="clearAllData()">
-                    <i class="fas fa-trash"></i> Hapus Semua Data
+
+                <button class="btn btn-danger w-100" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Keluar
                 </button>
             </div>
         </div>
-        
+
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
-            <div class="nav-items">
-                <div class="nav-item active" onclick="navigateTo('home')">
-                    <div class="nav-icon"><i class="fas fa-home"></i></div>
-                    <div class="nav-label">Home</div>
-                </div>
-                <div class="nav-item" onclick="navigateTo('consultation')">
-                    <div class="nav-icon"><i class="fas fa-video"></i></div>
-                    <div class="nav-label">Konseling</div>
-                </div>
-                <div class="nav-item" onclick="navigateTo('diary')">
-                    <div class="nav-icon"><i class="fas fa-book"></i></div>
-                    <div class="nav-label">Diary</div>
-                </div>
-                <div class="nav-item" onclick="navigateTo('music')">
-                    <div class="nav-icon"><i class="fas fa-headphones"></i></div>
-                    <div class="nav-label">Musik</div>
-                </div>
-                <div class="nav-item" onclick="navigateTo('profile')">
-                    <div class="nav-icon"><i class="fas fa-user"></i></div>
-                    <div class="nav-label">Profil</div>
-                </div>
+            <div class="nav-item active" onclick="navigateTo('beranda')">
+                <i class="fas fa-home"></i>
+                <span>Beranda</span>
+            </div>
+            <div class="nav-item" onclick="navigateTo('diary')">
+                <i class="fas fa-book"></i>
+                <span>Diary</span>
+            </div>
+            <div class="nav-item" onclick="navigateTo('konseling')">
+                <i class="fas fa-user-doctor"></i>
+                <span>Konseling</span>
+            </div>
+            <div class="nav-item" onclick="navigateTo('artikel')">
+                <i class="fas fa-newspaper"></i>
+                <span>Artikel</span>
+            </div>
+            <div class="nav-item" onclick="navigateTo('profil')">
+                <i class="fas fa-user"></i>
+                <span>Profil</span>
             </div>
         </div>
     </div>
-    
-    <!-- Add Diary Modal -->
-    <div class="modal fade" id="addDiaryModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content modal-custom">
-                <div class="modal-header">
-                    <h5 class="modal-title">Tambah Catatan Diary</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Bagaimana perasaanmu?</label>
-                        <select class="form-select" id="diaryMood">
-                            <option value="😊">😊 Senang</option>
-                            <option value="😌">😌 Tenang</option>
-                            <option value="😔">😔 Sedih</option>
-                            <option value="😰">😰 Cemas</option>
-                            <option value="😤">😤 Marah</option>
-                            <option value="😴">😴 Lelah</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Ceritakan harimu</label>
-                        <textarea class="form-control" id="diaryContent" placeholder="Tulis tentang perasaan, aktivitas, atau apapun..."></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Upload Foto (opsional)</label>
-                        <input type="file" class="form-control" id="diaryPhoto" accept="image/*">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary-custom" onclick="saveDiary()">Simpan Diary</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
     <script>
-        // ============ DATA ============
-        const quotes = [
-            "Kesehatan mental adalah bagian dari kesehatan secara keseluruhan. Jaga dirimu dengan baik.",
-            "Tidak apa-apa untuk tidak baik-baik saja. Yang penting adalah kamu mau mencoba.",
-            "Setiap hari adalah kesempatan baru untuk memulai lagi.",
-            "Kamu lebih kuat dari yang kamu pikirkan.",
-            "Berbicara tentang perasaanmu adalah tanda kekuatan, bukan kelemahan.",
-            "Self-care bukan egois, itu penting.",
-            "Kesehatan mentalmu sama pentingnya dengan kesehatan fisikmu.",
-            "Istirahatlah saat kamu lelah, tapi jangan menyerah.",
-            "Kamu tidak sendirian dalam perjuangan ini.",
-            "Proses penyembuhan membutuhkan waktu, bersabarlah.",
-            "Mencari bantuan adalah tindakan keberanian.",
-            "Kamu layak mendapatkan kebahagiaan dan kedamaian.",
-            "Setiap langkah kecil adalah kemajuan.",
-            "Jangan bandingkan dirimu dengan orang lain.",
-            "Kamu sudah melakukan yang terbaik.",
-            "Mental health matters, prioritaskan dirimu.",
-            "Tidak masalah untuk minta bantuan profesional.",
-            "Kamu adalah prioritas dalam hidupmu sendiri.",
-            "Healing bukan proses yang linear.",
-            "Kamu berhak merasa bahagia.",
-            "Jaga batasan diri untuk kesehatanmu.",
-            "Kamu sudah cukup sebagaimana adanya.",
-            "Progress, not perfection.",
-            "Kamu berhak untuk beristirahat.",
-            "Mental health is a journey, not a destination.",
-            "Kamu tidak perlu menyenangkan semua orang.",
-            "Kesehatan mental dimulai dari self-acceptance.",
-            "Kamu layak mendapat cinta dan kasih sayang.",
-            "Terimalah proses penyembuhanmu.",
-            "Kamu pantas merasa bangga pada dirimu sendiri."
-        ];
-        
-        const quoteImages = [
-            "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1516302752625-fcc3c50ae61f?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=400&fit=crop",
-            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop"
-        ];
-        
-        const articles = [
-            {
-                title: "Mengenal Bipolar Disorder",
-                desc: "Panduan lengkap memahami gangguan bipolar dan cara mengelolanya",
-                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&h=300&fit=crop"
-            },
-            {
-                title: "Tips Mengelola Stres",
-                desc: "Teknik praktis untuk mengurangi stres dalam kehidupan sehari-hari",
-                image: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=400&h=300&fit=crop"
-            },
-            {
-                title: "Pentingnya Istirahat Mental",
-                desc: "Mengapa otak kita butuh waktu untuk beristirahat",
-                image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400&h=300&fit=crop"
-            },
-            {
-                title: "Journaling untuk Kesehatan Mental",
-                desc: "Manfaat menulis diary untuk keseimbangan emosi",
-                image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop"
-            },
-            {
-                title: "Meditasi untuk Pemula",
-                desc: "Panduan mudah memulai praktik meditasi harian",
-                image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=300&fit=crop"
-            },
-            {
-                title: "Mengatasi Kecemasan",
-                desc: "Strategi efektif menghadapi anxiety dan overthinking",
-                image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&h=300&fit=crop"
-            },
-            {
-                title: "Pentingnya Support System",
-                desc: "Peran keluarga dan teman dalam kesehatan mental",
-                image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=300&fit=crop"
-            },
-            {
-                title: "Self-Compassion",
-                desc: "Belajar menyayangi dan memaafkan diri sendiri",
-                image: "https://images.unsplash.com/photo-1516302752625-fcc3c50ae61f?w=400&h=300&fit=crop"
-            },
-            {
-                title: "Tidur yang Berkualitas",
-                desc: "Hubungan antara pola tidur dan kesehatan mental",
-                image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400&h=300&fit=crop"
-            },
-            {
-                title: "Mindfulness dalam Keseharian",
-                desc: "Cara hidup lebih sadar dan hadir di setiap momen",
-                image: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=400&h=300&fit=crop"
-            }
-        ];
-        
+        // Data Storage
         const doctors = [
             {
-                name: "Dr. Amelia Putri, Sp.KJ",
-                specialty: "Psikiater - Bipolar & Mood Disorders",
-                availability: "Senin - Jumat, 09:00 - 17:00",
-                available: true,
-                icon: "👩‍⚕️",
-                photo: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop"
+                id: 1,
+                name: "Dr. Sarah Wijaya, Sp.KJ",
+                specialty: "Psikiater - Gangguan Mood",
+                schedule: "Senin - Jumat, 09:00 - 15:00",
+                image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400",
+                zoom: "https://zoom.us/j/123456789"
             },
             {
-                name: "Dr. Budi Santoso, M.Psi",
-                specialty: "Psikolog Klinis - Anxiety & Stress",
-                availability: "Selasa - Sabtu, 10:00 - 18:00",
-                available: true,
-                icon: "👨‍⚕️",
-                photo: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop"
+                id: 2,
+                name: "Psikolog Andi Pratama, M.Psi",
+                specialty: "Psikolog Klinis - Terapi CBT",
+                schedule: "Selasa - Sabtu, 10:00 - 16:00",
+                image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400",
+                zoom: "https://zoom.us/j/987654321"
             },
             {
-                name: "Dr. Clara Wijaya, Sp.KJ",
-                specialty: "Psikiater - Depression & Trauma",
-                availability: "Senin - Kamis, 13:00 - 20:00",
-                available: false,
-                icon: "👩‍⚕️",
-                photo: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=400&fit=crop"
+                id: 3,
+                name: "Dr. Linda Kartika, Sp.KJ",
+                specialty: "Psikiater - Gangguan Kecemasan",
+                schedule: "Senin - Kamis, 13:00 - 18:00",
+                image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400",
+                zoom: "https://zoom.us/j/456789123"
             },
             {
-                name: "Dr. Dimas Prakoso, M.Psi",
-                specialty: "Psikolog - Remaja & Mahasiswa",
-                availability: "Rabu - Minggu, 08:00 - 16:00",
-                available: true,
-                icon: "👨‍⚕️",
-                photo: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=400&fit=crop"
+                id: 4,
+                name: "Psikolog Budi Santoso, M.Psi",
+                specialty: "Psikolog - Konseling Remaja",
+                schedule: "Rabu - Minggu, 08:00 - 14:00",
+                image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400",
+                zoom: "https://zoom.us/j/789456123"
             }
         ];
-        
+
+        const articles = [
+            {
+                id: 1,
+                title: "Mengenal Gangguan Bipolar dan Cara Mengatasinya",
+                summary: "Bipolar adalah gangguan mental yang menyebabkan perubahan suasana hati ekstrem.",
+                image: "https://images.unsplash.com/photo-1504439468489-c8920d796a29?w=800",
+                content: "Gangguan bipolar adalah kondisi kesehatan mental yang menyebabkan perubahan suasana hati yang ekstrem, termasuk 'mania' emosional (manik atau hipomanik) dan depresi. Penting untuk mengenali gejalanya dan mencari bantuan profesional untuk pengelolaan yang tepat."
+            },
+            {
+                id: 2,
+                title: "Tips Menjaga Kesehatan Mental di Era Digital",
+                summary: "Panduan praktis untuk menjaga keseimbangan hidup di tengah teknologi modern.",
+                image: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800",
+                content: "Di era digital ini, penting untuk membatasi waktu layar, menjaga interaksi sosial langsung, dan melakukan aktivitas yang menyegarkan pikiran. Luangkan waktu untuk diri sendiri tanpa gangguan teknologi."
+            },
+            {
+                id: 3,
+                title: "Manfaat Meditasi untuk Kesehatan Mental",
+                summary: "Meditasi terbukti efektif mengurangi stres dan meningkatkan kesejahteraan.",
+                image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800",
+                content: "Meditasi membantu menenangkan pikiran, mengurangi kecemasan, dan meningkatkan fokus. Praktik rutin meditasi dapat memberikan manfaat jangka panjang untuk kesehatan mental Anda."
+            },
+            {
+                id: 4,
+                title: "Mengatasi Kecemasan dengan Teknik Pernapasan",
+                summary: "Teknik pernapasan sederhana yang dapat dilakukan kapan saja.",
+                image: "https://images.unsplash.com/photo-1499728603263-13726abce5fd?w=800",
+                content: "Pernapasan dalam dan teratur dapat membantu menenangkan sistem saraf, mengurangi detak jantung, dan mengatasi serangan panik. Praktikkan teknik 4-7-8 untuk hasil optimal."
+            },
+            {
+                id: 5,
+                title: "Pentingnya Tidur Berkualitas untuk Mental Health",
+                summary: "Tidur yang cukup adalah kunci kesehatan mental yang baik.",
+                image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800",
+                content: "Kurang tidur dapat memperburuk kondisi kesehatan mental. Usahakan tidur 7-9 jam setiap malam dengan rutinitas yang konsisten untuk menjaga keseimbangan emosi."
+            },
+            {
+                id: 6,
+                title: "Olahraga sebagai Terapi Alami untuk Depresi",
+                summary: "Aktivitas fisik dapat meningkatkan mood dan mengurangi gejala depresi.",
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800",
+                content: "Olahraga melepaskan endorfin yang meningkatkan suasana hati. Bahkan aktivitas ringan seperti jalan kaki 30 menit dapat memberikan manfaat signifikan untuk kesehatan mental."
+            },
+            {
+                id: 7,
+                title: "Membangun Dukungan Sosial yang Sehat",
+                summary: "Hubungan sosial yang positif adalah fondasi kesehatan mental.",
+                image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800",
+                content: "Memiliki jaringan dukungan sosial yang kuat dapat membantu mengatasi stres dan meningkatkan resiliensi. Jangan ragu untuk berbagi dengan orang terdekat atau bergabung dengan komunitas."
+            },
+            {
+                id: 8,
+                title: "Mengenali Tanda-tanda Burnout",
+                summary: "Burnout bisa terjadi pada siapa saja. Kenali gejalanya sejak dini.",
+                image: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800",
+                content: "Burnout ditandai dengan kelelahan kronis, sinisme, dan penurunan produktivitas. Penting untuk mengenali tanda-tanda ini dan mengambil langkah proaktif untuk pemulihan."
+            },
+            {
+                id: 9,
+                title: "Terapi Seni untuk Ekspresi Emosi",
+                summary: "Seni dapat menjadi media terapi yang efektif untuk mengekspresikan perasaan.",
+                image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800",
+                content: "Terapi seni membantu mengekspresikan emosi yang sulit diungkapkan dengan kata-kata. Melukis, menggambar, atau kerajinan tangan dapat menjadi outlet kreatif untuk penyembuhan."
+            },
+            {
+                id: 10,
+                title: "Self-Care: Bukan Egois, Tapi Kebutuhan",
+                summary: "Merawat diri sendiri adalah investasi untuk kesehatan jangka panjang.",
+                image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800",
+                content: "Self-care bukan tentang egois, tetapi tentang menjaga kesehatan fisik dan mental agar dapat memberikan yang terbaik untuk diri sendiri dan orang lain. Luangkan waktu untuk aktivitas yang Anda nikmati."
+            }
+        ];
+
         const quizQuestions = [
             {
-                question: "Bagaimana perasaanmu dalam seminggu terakhir?",
-                options: [
-                    { text: "Sangat baik dan stabil", value: 1 },
-                    { text: "Cukup baik dengan sedikit naik turun", value: 2 },
-                    { text: "Tidak stabil, sering berubah drastis", value: 3 },
-                    { text: "Sangat buruk dan sulit dikontrol", value: 4 }
-                ]
+                question: "Bagaimana perasaan Anda dalam seminggu terakhir?",
+                options: ["Sangat Baik", "Baik", "Biasa Saja", "Kurang Baik", "Sangat Buruk"]
             },
             {
-                question: "Seberapa sering kamu merasa cemas atau khawatir berlebihan?",
-                options: [
-                    { text: "Jarang atau tidak pernah", value: 1 },
-                    { text: "Kadang-kadang", value: 2 },
-                    { text: "Sering", value: 3 },
-                    { text: "Hampir setiap hari", value: 4 }
-                ]
+                question: "Seberapa sering Anda merasa cemas atau khawatir?",
+                options: ["Tidak Pernah", "Jarang", "Kadang-kadang", "Sering", "Selalu"]
             },
             {
-                question: "Bagaimana kualitas tidurmu?",
-                options: [
-                    { text: "Tidur nyenyak dan cukup", value: 1 },
-                    { text: "Sesekali susah tidur", value: 2 },
-                    { text: "Sering insomnia", value: 3 },
-                    { text: "Pola tidur sangat terganggu", value: 4 }
-                ]
+                question: "Apakah Anda memiliki kesulitan tidur?",
+                options: ["Tidak Sama Sekali", "Jarang", "Kadang-kadang", "Sering", "Sangat Sering"]
             },
             {
-                question: "Apakah kamu masih menikmati aktivitas yang biasanya kamu sukai?",
-                options: [
-                    { text: "Ya, sangat menikmati", value: 1 },
-                    { text: "Masih menikmati tapi tidak seperti dulu", value: 2 },
-                    { text: "Mulai kehilangan minat", value: 3 },
-                    { text: "Tidak tertarik sama sekali", value: 4 }
-                ]
+                question: "Bagaimana tingkat energi Anda sehari-hari?",
+                options: ["Sangat Tinggi", "Tinggi", "Cukup", "Rendah", "Sangat Rendah"]
             },
             {
-                question: "Bagaimana tingkat energimu sehari-hari?",
-                options: [
-                    { text: "Energi penuh dan produktif", value: 1 },
-                    { text: "Cukup energi untuk aktivitas", value: 2 },
-                    { text: "Sering lelah dan lesu", value: 3 },
-                    { text: "Sangat lelah, sulit melakukan aktivitas", value: 4 }
-                ]
+                question: "Apakah Anda merasa kehilangan minat pada aktivitas favorit?",
+                options: ["Tidak Sama Sekali", "Sedikit", "Cukup", "Banyak", "Sangat Banyak"]
             }
         ];
-        
-        const musicPlaylists = {
-            calm: ["Ocean Waves", "Piano Relaxation", "Gentle Breeze", "Calm Night"],
-            stress: ["Deep Breathing", "Stress Relief", "Nature Sounds", "Peaceful Mind"],
-            sad: ["Rainy Day", "Soft Melancholy", "Healing Journey", "Safe Space"],
-            focus: ["Lo-fi Focus", "Study Beats", "Concentration", "Productive Flow"]
-        };
-        
-        const faqData = [
-            {
-                question: "Bagaimana cara menggunakan fitur Quiz?",
-                answer: "Klik menu Quiz di beranda, jawab semua pertanyaan sesuai kondisimu, lalu lihat hasil dan rekomendasi yang diberikan."
-            },
-            {
-                question: "Bagaimana cara membuat jadwal konseling?",
-                answer: "Masuk ke menu Konseling, pilih dokter yang tersedia, lalu klik tombol 'Mulai Konseling via Zoom'. Pastikan aplikasi Zoom sudah terinstall."
-            },
-            {
-                question: "Apakah data diary saya aman?",
-                answer: "Ya, semua data diary disimpan secara lokal di perangkatmu dan tidak dikirim ke server manapun."
-            },
-            {
-                question: "Bagaimana cara upload foto di Diary?",
-                answer: "Saat membuat catatan diary baru, klik tombol upload foto dan pilih gambar dari galeri perangkatmu."
-            },
-            {
-                question: "Bagaimana musik dipilih sesuai mood saya?",
-                answer: "Sistem merekomendasikan playlist berdasarkan hasil Quiz dan mood yang kamu pilih di Diary."
-            },
-            {
-                question: "Apa itu hasil Quiz?",
-                answer: "Hasil Quiz memberikan gambaran kondisi emosional saat ini dan rekomendasi fitur yang bisa membantumu."
-            }
+
+        const musicTracks = [
+            { name: "Musik Relaksasi 1 - Ocean Waves", file: "" },
+            { name: "Musik Relaksasi 2 - Rain Sounds", file: "" },
+            { name: "Musik Relaksasi 3 - Forest Birds", file: "" },
+            { name: "Musik Relaksasi 4 - Soft Piano", file: "" }
         ];
-        
-        // ============ STATE ============
-        let currentPage = 'home';
-        let currentQuizIndex = 0;
+
+        let currentUser = null;
+        let currentPage = 'beranda';
+        let currentQuizQuestion = 0;
         let quizAnswers = [];
-        let currentPlaylistType = '';
-        let currentSongIndex = 0;
+        let currentMusicIndex = 0;
         let isPlaying = false;
-        
-        // ============ INITIALIZATION ============
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                anime({
-                    targets: '#splashScreen',
-                    opacity: [1, 0],
-                    duration: 500,
-                    easing: 'easeOutQuad',
-                    complete: () => {
-                        document.getElementById('splashScreen').style.display = 'none';
-                        document.getElementById('mainApp').style.display = 'block';
-                        animateEntrance();
-                    }
-                });
-            }, 2000);
-            
-            initializeApp();
-        });
-        
-        function initializeApp() {
-            loadDailyQuote();
-            loadArticles();
+        let editingDiaryId = null;
+
+        function initApp() {
+            checkAuth();
             loadDoctors();
-            loadDiaries();
-            loadFAQ();
-            loadHistory();
-            
-            // Register Service Worker
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register(createServiceWorker());
+            loadArticles();
+            setupEventListeners();
+        }
+
+        function checkAuth() {
+            const session = localStorage.getItem('sijiwaSess');
+            if (session) {
+                currentUser = JSON.parse(session);
+                showMainApp();
+            } else {
+                showLoginPage();
             }
         }
-        
-        function animateEntrance() {
-            anime({
-                targets: '.feature-card',
-                translateY: [50, 0],
-                opacity: [0, 1],
-                delay: anime.stagger(100),
-                duration: 600,
-                easing: 'easeOutQuad'
-            });
+
+        function showLoginPage() {
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('registerPage').classList.add('hidden');
+            document.getElementById('mainApp').classList.add('hidden');
+            animatePage('loginPage');
         }
-        
-        // ============ NAVIGATION ============
+
+        function showRegisterPage() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('registerPage').classList.remove('hidden');
+            animatePage('registerPage');
+        }
+
+        function showMainApp() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('registerPage').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            navigateTo('beranda');
+            updateWelcomeText();
+        }
+
+        function register(e) {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            if (password.length < 6) {
+                alert('Password minimal 6 karakter!');
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('sijiwaUsers') || '[]');
+            
+            if (users.find(u => u.email === email)) {
+                alert('Email sudah terdaftar!');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now(),
+                name,
+                email,
+                password: btoa(password),
+                createdAt: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            localStorage.setItem('sijiwaUsers', JSON.stringify(users));
+            
+            alert('Registrasi berhasil! Silakan login.');
+            showLoginPage();
+        }
+
+        function login(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const remember = document.getElementById('rememberMe').checked;
+
+            const users = JSON.parse(localStorage.getItem('sijiwaUsers') || '[]');
+            const user = users.find(u => u.email === email && atob(u.password) === password);
+
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('sijiwaSess', JSON.stringify(user));
+                if (remember) {
+                    localStorage.setItem('sijiwaRemember', 'true');
+                }
+                showMainApp();
+            } else {
+                alert('Email atau password salah!');
+            }
+        }
+
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                localStorage.removeItem('sijiwaSess');
+                localStorage.removeItem('sijiwaRemember');
+                currentUser = null;
+                showLoginPage();
+            }
+        }
+
         function navigateTo(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             
-            document.getElementById(page + 'Page').classList.add('active');
-            
-            const navMap = {
-                'home': 0,
-                'consultation': 1,
-                'diary': 2,
-                'music': 3,
-                'profile': 4,
-                'quiz': 0,
-                'history': 0
-            };
-            
+            document.getElementById(page + 'Page').classList.remove('hidden');
             const navItems = document.querySelectorAll('.nav-item');
-            if (navMap[page] !== undefined) {
-                navItems[navMap[page]].classList.add('active');
-            }
+            navItems.forEach(item => {
+                const text = item.textContent.toLowerCase().trim();
+                if ((page === 'beranda' && text.includes('beranda')) ||
+                    (page === 'diary' && text.includes('diary')) ||
+                    (page === 'konseling' && text.includes('konseling')) ||
+                    (page === 'artikel' && text.includes('artikel')) ||
+                    (page === 'profil' && text.includes('profil'))) {
+                    item.classList.add('active');
+                }
+            });
             
             currentPage = page;
-            
-            anime({
-                targets: `#${page}Page`,
-                translateY: [20, 0],
-                opacity: [0, 1],
-                duration: 300,
-                easing: 'easeOutQuad'
-            });
-        }
-        
-        // ============ QUOTES ============
-        function loadDailyQuote() {
-            const today = new Date().getDate();
-            const quote = quotes[today % quotes.length];
-            const quoteImage = quoteImages[today % quoteImages.length];
-            
-            document.getElementById('dailyQuote').textContent = `"${quote}"`;
-            
-            // Update quote card with background image
-            const quoteCard = document.querySelector('.quote-card');
-            quoteCard.style.backgroundImage = `linear-gradient(rgba(0, 204, 255, 0.8), rgba(210, 247, 255, 0.8)), url('${quoteImage}')`;
-            quoteCard.style.backgroundSize = 'cover';
-            quoteCard.style.backgroundPosition = 'center';
-        }
-        
-        function saveQuote() {
-            const quote = document.getElementById('dailyQuote').textContent;
-            alert('Quote berhasil disimpan! ✅\n\n' + quote);
-        }
-        
-        function shareQuote() {
-            const quote = document.getElementById('dailyQuote').textContent;
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Quote Harian Sijiwa',
-                    text: quote
-                });
-            } else {
-                alert('Fitur share tidak didukung di browser ini');
+            animatePage(page + 'Page');
+
+            if (page === 'diary') loadDiaryEntries();
+            if (page === 'quiz') restartQuiz();
+            if (page === 'profil') {
+                updateProfileInfo();
+                updateActivityStats();
             }
         }
-        
-        // ============ ARTICLES ============
+
+        function backToKonseling() {
+            document.getElementById('doctorDetailPage').classList.add('hidden');
+            document.getElementById('konselingPage').classList.remove('hidden');
+        }
+
+        function backToArtikel() {
+            document.getElementById('articleDetailPage').classList.add('hidden');
+            document.getElementById('artikelPage').classList.remove('hidden');
+        }
+
+        function loadDoctors() {
+            const container = document.getElementById('doctorList');
+            container.innerHTML = doctors.map(doc => `
+                <div class="card-custom doctor-card" onclick="showDoctorDetail(${doc.id})">
+                    <img src="${doc.image}" alt="${doc.name}" class="doctor-img">
+                    <h5>${doc.name}</h5>
+                    <p class="text-muted mb-2">${doc.specialty}</p>
+                    <p class="mb-3"><i class="fas fa-clock"></i> ${doc.schedule}</p>
+                    <button class="btn btn-primary-custom">Lihat Detail</button>
+                </div>
+            `).join('');
+        }
+
+        function showDoctorDetail(id) {
+            const doctor = doctors.find(d => d.id === id);
+            if (!doctor) return;
+
+            document.getElementById('konselingPage').classList.add('hidden');
+            document.getElementById('doctorDetailPage').classList.remove('hidden');
+            
+            document.getElementById('doctorDetail').innerHTML = `
+                <div class="card-custom text-center">
+                    <img src="${doctor.image}" alt="${doctor.name}" class="doctor-img" style="width: 150px; height: 150px;">
+                    <h4>${doctor.name}</h4>
+                    <p class="text-muted">${doctor.specialty}</p>
+                    <hr>
+                    <div class="text-start">
+                        <h5><i class="fas fa-calendar"></i> Jadwal Praktik</h5>
+                        <p>${doctor.schedule}</p>
+                        <h5 class="mt-4"><i class="fas fa-info-circle"></i> Tentang</h5>
+                        <p>Dokter berpengalaman dalam menangani berbagai masalah kesehatan mental dengan pendekatan holistik dan penuh empati.</p>
+                    </div>
+                    <button class="btn btn-primary-custom w-100 mt-3" onclick="startZoomConseling('${doctor.zoom}')">
+                        <i class="fas fa-video"></i> Mulai Konseling via Zoom
+                    </button>
+                </div>
+            `;
+            animatePage('doctorDetailPage');
+        }
+
+        function startZoomConseling(zoomLink) {
+            window.open(zoomLink, '_blank');
+        }
+
         function loadArticles() {
-            const articleList = document.getElementById('articleList');
-            articleList.innerHTML = articles.map(article => `
-                <div class="article-card">
-                    <img src="${article.image}" 
-                         alt="${article.title}" 
-                         class="article-image"
-                         onerror="this.src='https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=400&h=300&fit=crop'">
-                    <div class="article-content">
-                        <div class="article-title">${article.title}</div>
-                        <div class="article-desc">${article.desc}</div>
-                        <button class="btn btn-primary-custom btn-sm" onclick="readArticle('${article.title}')">
-                            Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+            const container = document.getElementById('articleList');
+            container.innerHTML = articles.map(art => `
+                <div class="card-custom" onclick="showArticleDetail(${art.id})">
+                    <img src="${art.image}" alt="${art.title}" class="article-img">
+                    <h5>${art.title}</h5>
+                    <p class="text-muted">${art.summary}</p>
+                    <button class="btn btn-primary-custom">Baca Selengkapnya</button>
+                </div>
+            `).join('');
+        }
+
+        function showArticleDetail(id) {
+            const article = articles.find(a => a.id === id);
+            if (!article) return;
+
+            document.getElementById('artikelPage').classList.add('hidden');
+            document.getElementById('articleDetailPage').classList.remove('hidden');
+            
+            document.getElementById('articleDetail').innerHTML = `
+                <div class="card-custom">
+                    <img src="${article.image}" alt="${article.title}" class="article-img">
+                    <h4>${article.title}</h4>
+                    <p class="text-muted mb-3">${article.summary}</p>
+                    <hr>
+                    <p>${article.content}</p>
+                </div>
+            `;
+            animatePage('articleDetailPage');
+        }
+
+        function loadDiaryEntries() {
+            if (!currentUser) return;
+            const entries = JSON.parse(localStorage.getItem('sijiwa_diary_' + currentUser.id) || '[]');
+            const container = document.getElementById('diaryList');
+            
+            if (entries.length === 0) {
+                container.innerHTML = '<div class="card-custom text-center"><p class="text-muted">Belum ada catatan diary</p></div>';
+                return;
+            }
+
+            container.innerHTML = entries.map(entry => `
+                <div class="diary-entry">
+                    <div class="diary-date">${new Date(entry.date).toLocaleDateString('id-ID', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    })}</div>
+                    <p>${entry.content}</p>
+                    <div class="d-flex gap-2 mt-2">
+                        <button class="btn btn-sm btn-primary-custom" onclick="editDiary(${entry.id})">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteDiary(${entry.id})">
+                            <i class="fas fa-trash"></i> Hapus
                         </button>
                     </div>
                 </div>
-            `).join('');
+            `).reverse().join('');
         }
-        
-        function readArticle(title) {
-            alert(`Membuka artikel: ${title}\n\nFitur baca artikel akan segera tersedia!`);
+
+        function showAddDiary() {
+            document.getElementById('addDiaryModal').classList.remove('hidden');
+            document.getElementById('diaryContent').value = '';
+            editingDiaryId = null;
+            animateElement('addDiaryModal');
         }
-        
-        function uploadArticlePhoto() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = (e) => {
-                alert('Foto artikel berhasil diupload! ✅');
-            };
-            input.click();
-        }
-        
-        // ============ DOCTORS ============
-        function loadDoctors() {
-            const doctorList = document.getElementById('doctorList');
-            doctorList.innerHTML = doctors.map(doctor => `
-                <div class="doctor-card">
-                    <div class="doctor-header">
-                        <div class="doctor-avatar" style="width: 80px; height: 80px; background-image: url('${doctor.photo}'); background-size: cover; background-position: center; position: relative;">
-                            <div class="camera-badge">
-                                <i class="fas fa-video"></i>
-                            </div>
-                        </div>
-                        <div class="doctor-info">
-                            <h4>${doctor.name}</h4>
-                            <div class="doctor-spec">${doctor.specialty}</div>
-                        </div>
-                    </div>
-                    <div class="doctor-availability">
-                        <i class="fas fa-clock"></i> ${doctor.availability}
-                    </div>
-                    ${doctor.available ? 
-                        `<button class="btn btn-primary-custom w-100" onclick="startConsultation('${doctor.name}')">
-                            <i class="fas fa-video"></i> Mulai Konseling via Zoom
-                        </button>` :
-                        `<button class="btn btn-secondary w-100" disabled>
-                            <i class="fas fa-clock"></i> Tidak Tersedia
-                        </button>`
-                    }
-                </div>
-            `).join('');
-        }
-        
-        function startConsultation(doctorName) {
-            const consultation = {
-                doctor: doctorName,
-                date: new Date().toISOString(),
-                status: 'upcoming'
-            };
-            
-            let consultations = JSON.parse(localStorage.getItem('consultations') || '[]');
-            consultations.push(consultation);
-            localStorage.setItem('consultations', JSON.stringify(consultations));
-            
-            alert(`Konsultasi dengan ${doctorName} dijadwalkan!\n\nLink Zoom akan dikirim via email.`);
-            loadHistory();
-        }
-        
-        // ============ QUIZ ============
-        function loadQuiz() {
-            currentQuizIndex = 0;
-            quizAnswers = [];
-            document.getElementById('quizContainer').style.display = 'block';
-            document.getElementById('quizResult').style.display = 'none';
-            showQuestion();
-        }
-        
-        function showQuestion() {
-            if (currentQuizIndex >= quizQuestions.length) {
-                showQuizResult();
+
+        function saveDiary() {
+            if (!currentUser) return;
+            const content = document.getElementById('diaryContent').value.trim();
+            if (!content) {
+                alert('Tulis sesuatu terlebih dahulu!');
                 return;
             }
+
+            let entries = JSON.parse(localStorage.getItem('sijiwa_diary_' + currentUser.id) || '[]');
             
-            const question = quizQuestions[currentQuizIndex];
-            document.getElementById('questionText').textContent = `${currentQuizIndex + 1}. ${question.question}`;
+            if (editingDiaryId) {
+                const index = entries.findIndex(e => e.id === editingDiaryId);
+                if (index !== -1) {
+                    entries[index].content = content;
+                    entries[index].date = new Date().toISOString();
+                }
+            } else {
+                const newEntry = {
+                    id: Date.now(),
+                    content,
+                    date: new Date().toISOString()
+                };
+                entries.push(newEntry);
+            }
+
+            localStorage.setItem('sijiwa_diary_' + currentUser.id, JSON.stringify(entries));
+            cancelDiary();
+            loadDiaryEntries();
+        }
+
+        function editDiary(id) {
+            if (!currentUser) return;
+            const entries = JSON.parse(localStorage.getItem('sijiwa_diary_' + currentUser.id) || '[]');
+            const entry = entries.find(e => e.id === id);
+            if (entry) {
+                document.getElementById('diaryContent').value = entry.content;
+                editingDiaryId = id;
+                document.getElementById('addDiaryModal').classList.remove('hidden');
+                animateElement('addDiaryModal');
+            }
+        }
+
+        function deleteDiary(id) {
+            if (!currentUser) return;
+            if (confirm('Hapus catatan ini?')) {
+                let entries = JSON.parse(localStorage.getItem('sijiwa_diary_' + currentUser.id) || '[]');
+                entries = entries.filter(e => e.id !== id);
+                localStorage.setItem('sijiwa_diary_' + currentUser.id, JSON.stringify(entries));
+                loadDiaryEntries();
+            }
+        }
+
+        function cancelDiary() {
+            document.getElementById('addDiaryModal').classList.add('hidden');
+            editingDiaryId = null;
+        }
+
+        function restartQuiz() {
+            currentQuizQuestion = 0;
+            quizAnswers = [];
+            document.getElementById('quizContent').classList.remove('hidden');
+            document.getElementById('quizResult').classList.add('hidden');
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            const question = quizQuestions[currentQuizQuestion];
+            document.getElementById('quizQuestion').textContent = question.question;
             
             const optionsHtml = question.options.map((opt, idx) => `
-                <div class="quiz-option" onclick="selectOption(${idx}, ${opt.value})">
-                    ${opt.text}
+                <div class="quiz-option" onclick="selectOption(${idx})" data-index="${idx}">
+                    ${opt}
                 </div>
             `).join('');
             
             document.getElementById('quizOptions').innerHTML = optionsHtml;
-            
-            document.getElementById('nextQuizBtn').style.display = 'none';
         }
-        
-        function selectOption(index, value) {
-            document.querySelectorAll('.quiz-option').forEach((opt, idx) => {
-                opt.classList.toggle('selected', idx === index);
+
+        function selectOption(index) {
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
             });
-            
-            quizAnswers[currentQuizIndex] = value;
-            document.getElementById('nextQuizBtn').style.display = 'block';
+            const selected = document.querySelector('.quiz-option[data-index="' + index + '"]');
+            if (selected) selected.classList.add('selected');
+            quizAnswers[currentQuizQuestion] = index;
         }
-        
+
         function nextQuestion() {
-            if (!quizAnswers[currentQuizIndex]) {
-                alert('Pilih salah satu jawaban terlebih dahulu!');
+            if (quizAnswers[currentQuizQuestion] === undefined) {
+                alert('Pilih salah satu jawaban!');
                 return;
             }
+
+            currentQuizQuestion++;
             
-            currentQuizIndex++;
-            showQuestion();
+            if (currentQuizQuestion < quizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                showQuizResult();
+            }
         }
-        
+
         function showQuizResult() {
-            document.getElementById('quizContainer').style.display = 'none';
-            document.getElementById('quizResult').style.display = 'block';
+            const avgScore = quizAnswers.reduce((a, b) => a + b, 0) / quizAnswers.length;
+            let result = '';
             
-            const totalScore = quizAnswers.reduce((a, b) => a + b, 0);
-            const avgScore = totalScore / quizAnswers.length;
-            
-            let resultText = '';
-            let recommendation = '';
-            
-            if (avgScore <= 1.5) {
-                resultText = '🌟 Kondisi Baik\n\nKesehatan mentalmu dalam kondisi yang baik! Pertahankan dengan rutin self-care.';
-                recommendation = 'Rekomendasi: Lanjutkan menulis Diary untuk menjaga stabilitas emosi.';
-            } else if (avgScore <= 2.5) {
-                resultText = '😊 Cukup Stabil\n\nAda beberapa fluktuasi emosi, tapi masih dalam batas normal.';
-                recommendation = 'Rekomendasi: Coba fitur Ruang Tenang untuk relaksasi.';
-            } else if (avgScore <= 3.5) {
-                resultText = '😔 Perlu Perhatian\n\nKamu mungkin mengalami stres atau tekanan emosional.';
-                recommendation = 'Rekomendasi: Pertimbangkan untuk berbicara dengan profesional melalui fitur Konseling.';
+            if (avgScore < 1.5) {
+                result = 'Kesehatan mental Anda dalam kondisi sangat baik! Pertahankan gaya hidup sehat Anda.';
+            } else if (avgScore < 2.5) {
+                result = 'Kesehatan mental Anda cukup baik, namun perlu perhatian lebih untuk menjaga keseimbangan emosi.';
+            } else if (avgScore < 3.5) {
+                result = 'Anda mungkin mengalami beberapa tantangan kesehatan mental. Pertimbangkan untuk berkonsultasi dengan profesional.';
             } else {
-                resultText = '⚠️ Butuh Dukungan\n\nKondisimu memerlukan perhatian khusus. Jangan ragu mencari bantuan.';
-                recommendation = 'Rekomendasi: Segera hubungi psikiater melalui fitur Konseling Online.';
+                result = 'Anda mungkin memerlukan bantuan profesional. Jangan ragu untuk menghubungi konselor atau psikolog.';
             }
-            
-            document.getElementById('resultText').innerHTML = resultText.replace(/\n/g, '<br>');
-            document.getElementById('recommendation').innerHTML = recommendation;
-            
-            anime({
-                targets: '#quizResult',
-                scale: [0.9, 1],
-                opacity: [0, 1],
-                duration: 500,
-                easing: 'easeOutBack'
-            });
-        }
-        
-        function restartQuiz() {
-            loadQuiz();
-        }
-        
-        // Initialize quiz when page loads
-        window.addEventListener('DOMContentLoaded', () => {
-            loadQuiz();
-        });
-        
-        // ============ DIARY ============
-        function loadDiaries() {
-            const diaries = JSON.parse(localStorage.getItem('diaries') || '[]');
-            const diaryList = document.getElementById('diaryList');
-            
-            if (diaries.length === 0) {
-                diaryList.innerHTML = `
-                    <div class="text-center py-5">
-                        <i class="fas fa-book-open" style="font-size: 3rem; color: var(--blue-fresh); margin-bottom: 1rem;"></i>
-                        <p>Belum ada catatan diary.<br>Mulai tulis ceritamu hari ini!</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            diaryList.innerHTML = diaries.reverse().map((diary, idx) => `
-                <div class="diary-item">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <div class="diary-date">
-                            <i class="fas fa-calendar"></i> ${new Date(diary.date).toLocaleDateString('id-ID')}
-                        </div>
-                        <div style="font-size: 1.5rem;">${diary.mood}</div>
-                    </div>
-                    <div class="diary-preview">${diary.content.substring(0, 100)}${diary.content.length > 100 ? '...' : ''}</div>
-                    ${diary.photo ? `<img src="${diary.photo}" class="img-fluid rounded mt-2" style="max-height: 200px;">` : ''}
-                </div>
-            `).join('');
-        }
-        
-        function showAddDiaryModal() {
-            const modal = new bootstrap.Modal(document.getElementById('addDiaryModal'));
-            modal.show();
-        }
-        
-        function saveDiary() {
-            const mood = document.getElementById('diaryMood').value;
-            const content = document.getElementById('diaryContent').value;
-            const photoInput = document.getElementById('diaryPhoto');
-            
-            if (!content.trim()) {
-                alert('Tulis sesuatu terlebih dahulu!');
-                return;
-            }
-            
-            const diary = {
-                date: new Date().toISOString(),
-                mood: mood,
-                content: content,
-                photo: null
-            };
-            
-            if (photoInput.files.length > 0) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    diary.photo = e.target.result;
-                    saveDiaryToStorage(diary);
-                };
-                reader.readAsDataURL(photoInput.files[0]);
-            } else {
-                saveDiaryToStorage(diary);
-            }
-        }
-        
-        function saveDiaryToStorage(diary) {
-            let diaries = JSON.parse(localStorage.getItem('diaries') || '[]');
-            diaries.push(diary);
-            localStorage.setItem('diaries', JSON.stringify(diaries));
-            
-            bootstrap.Modal.getInstance(document.getElementById('addDiaryModal')).hide();
-            
-            document.getElementById('diaryContent').value = '';
-            document.getElementById('diaryPhoto').value = '';
-            
-            loadDiaries();
-            
-            alert('Diary berhasil disimpan! ✅');
-        }
-        
-        // ============ MUSIC ============
-        function playPlaylist(type) {
-            currentPlaylistType = type;
-            currentSongIndex = 0;
-            isPlaying = true;
-            
-            document.getElementById('musicPlayerControl').style.display = 'block';
-            updateMusicPlayer();
-            
-            anime({
-                targets: '#musicPlayerControl',
-                scale: [0.9, 1],
-                opacity: [0, 1],
-                duration: 500,
-                easing: 'easeOutBack'
-            });
-        }
-        
-        function updateMusicPlayer() {
-            const playlist = musicPlaylists[currentPlaylistType];
-            const playlistNames = {
-                calm: 'Calm - Musik Menenangkan',
-                stress: 'Stress Release',
-                sad: 'Sad but Safe',
-                focus: 'Focus Mode'
-            };
-            
-            document.getElementById('currentPlaylist').textContent = playlistNames[currentPlaylistType];
-            document.getElementById('currentSong').textContent = `🎵 ${playlist[currentSongIndex]}`;
-            
-            const playPauseBtn = document.getElementById('playPauseBtn');
-            playPauseBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
-        }
-        
-        function togglePlayPause() {
-            isPlaying = !isPlaying;
-            updateMusicPlayer();
-        }
-        
-        function nextSong() {
-            const playlist = musicPlaylists[currentPlaylistType];
-            currentSongIndex = (currentSongIndex + 1) % playlist.length;
-            updateMusicPlayer();
-        }
-        
-        function previousSong() {
-            const playlist = musicPlaylists[currentPlaylistType];
-            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
-            updateMusicPlayer();
-        }
-        
-        // ============ HISTORY ============
-        function loadHistory() {
-            const consultations = JSON.parse(localStorage.getItem('consultations') || '[]');
-            
-            const upcoming = consultations.filter(c => c.status === 'upcoming');
-            const completed = consultations.filter(c => c.status === 'completed');
-            
-            const upcomingList = document.getElementById('upcomingList');
-            const completedList = document.getElementById('completedList');
-            
-            if (upcoming.length === 0) {
-                upcomingList.innerHTML = '<p class="text-center py-4">Belum ada jadwal konsultasi</p>';
-            } else {
-                upcomingList.innerHTML = upcoming.map(c => `
-                    <div class="history-card">
-                        <h5>${c.doctor}</h5>
-                        <p class="mb-2"><i class="fas fa-calendar"></i> ${new Date(c.date).toLocaleString('id-ID')}</p>
-                        <button class="btn btn-primary-custom" onclick="joinConsultation('${c.doctor}')">
-                            <i class="fas fa-video"></i> Join Zoom
-                        </button>
-                    </div>
-                `).join('');
-            }
-            
-            if (completed.length === 0) {
-                completedList.innerHTML = '<p class="text-center py-4">Belum ada riwayat konsultasi</p>';
-            } else {
-                completedList.innerHTML = completed.map(c => `
-                    <div class="history-card">
-                        <h5>${c.doctor}</h5>
-                        <p class="mb-2"><i class="fas fa-calendar"></i> ${new Date(c.date).toLocaleString('id-ID')}</p>
-                        <span class="badge bg-success">Selesai</span>
-                    </div>
-                `).join('');
-            }
-        }
-        
-        function joinConsultation(doctorName) {
-            alert(`Membuka Zoom meeting dengan ${doctorName}...`);
-        }
-        
-        // ============ FAQ ============
-        function loadFAQ() {
-            const faqList = document.getElementById('faqList');
-            faqList.innerHTML = faqData.map((faq, idx) => `
-                <div class="faq-item" onclick="toggleFAQ(${idx})">
-                    <div class="faq-question">
-                        <span>${faq.question}</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">${faq.answer}</div>
-                </div>
-            `).join('');
-        }
-        
-        function toggleFAQ(index) {
-            const items = document.querySelectorAll('.faq-item');
-            items[index].classList.toggle('active');
-        }
-        
-        // ============ UTILITY ============
-        function clearAllData() {
-            if (confirm('Apakah kamu yakin ingin menghapus semua data? Tindakan ini tidak dapat dibatalkan.')) {
-                localStorage.clear();
-                alert('Semua data berhasil dihapus!');
-                location.reload();
-            }
-        }
-        
-        function createServiceWorker() {
-            const swCode = `
-                self.addEventListener('install', (event) => {
-                    event.waitUntil(
-                        caches.open('sijiwa-v1').then((cache) => {
-                            return cache.addAll(['/']);
-                        })
-                    );
+
+            document.getElementById('quizContent').classList.add('hidden');
+            document.getElementById('quizResult').classList.remove('hidden');
+            document.getElementById('quizResultText').textContent = result;
+
+            if (currentUser) {
+                let quizHistory = JSON.parse(localStorage.getItem('sijiwa_quiz_' + currentUser.id) || '[]');
+                quizHistory.push({
+                    date: new Date().toISOString(),
+                    score: avgScore,
+                    result
                 });
+                localStorage.setItem('sijiwa_quiz_' + currentUser.id, JSON.stringify(quizHistory));
+            }
+        }
+
+        function toggleMusic() {
+            const btn = document.getElementById('playPauseBtn');
+            if (isPlaying) {
+                btn.classList.remove('fa-pause');
+                btn.classList.add('fa-play');
+                isPlaying = false;
+            } else {
+                btn.classList.remove('fa-play');
+                btn.classList.add('fa-pause');
+                isPlaying = true;
+            }
+        }
+
+        function nextMusic() {
+            currentMusicIndex = (currentMusicIndex + 1) % musicTracks.length;
+            updateCurrentMusic();
+        }
+
+        function previousMusic() {
+            currentMusicIndex = (currentMusicIndex - 1 + musicTracks.length) % musicTracks.length;
+            updateCurrentMusic();
+        }
+
+        function updateCurrentMusic() {
+            document.getElementById('currentMusic').textContent = musicTracks[currentMusicIndex].name;
+        }
+
+        function updateProfileInfo() {
+            if (currentUser) {
+                document.getElementById('profileName').textContent = currentUser.name;
+                document.getElementById('profileEmail').textContent = currentUser.email;
+            }
+        }
+
+        function updateWelcomeText() {
+            if (currentUser) {
+                document.getElementById('welcomeText').textContent = 'Selamat Datang, ' + currentUser.name + '!';
+            }
+        }
+
+        function updateActivityStats() {
+            if (currentUser) {
+                const diaryEntries = JSON.parse(localStorage.getItem('sijiwa_diary_' + currentUser.id) || '[]');
+                const quizHistory = JSON.parse(localStorage.getItem('sijiwa_quiz_' + currentUser.id) || '[]');
                 
-                self.addEventListener('fetch', (event) => {
-                    event.respondWith(
-                        caches.match(event.request).then((response) => {
-                            return response || fetch(event.request);
-                        })
-                    );
-                });
-            `;
-            const blob = new Blob([swCode], { type: 'application/javascript' });
-            return URL.createObjectURL(blob);
+                document.getElementById('diaryCount').textContent = diaryEntries.length;
+                document.getElementById('quizCount').textContent = quizHistory.length;
+            }
         }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('sijiwa_darkmode', isDark);
+            
+            const icon = document.getElementById('darkModeToggle');
+            const switchBtn = document.getElementById('darkModeSwitch');
+            
+            if (isDark) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                if (switchBtn) switchBtn.checked = true;
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                if (switchBtn) switchBtn.checked = false;
+            }
+        }
+
+        function loadDarkMode() {
+            const isDark = localStorage.getItem('sijiwa_darkmode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                const icon = document.getElementById('darkModeToggle');
+                const switchBtn = document.getElementById('darkModeSwitch');
+                if (icon) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                }
+                if (switchBtn) switchBtn.checked = true;
+            }
+        }
+
+        function animatePage(pageId) {
+            if (typeof anime !== 'undefined') {
+                anime({
+                    targets: '#' + pageId,
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    duration: 500,
+                    easing: 'easeOutQuad'
+                });
+            }
+        }
+
+        function animateElement(elementId) {
+            if (typeof anime !== 'undefined') {
+                anime({
+                    targets: '#' + elementId,
+                    opacity: [0, 1],
+                    scale: [0.9, 1],
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            }
+        }
+
+        function setupEventListeners() {
+            document.getElementById('loginForm').addEventListener('submit', login);
+            document.getElementById('registerForm').addEventListener('submit', register);
+            document.getElementById('showRegister').addEventListener('click', function(e) {
+                e.preventDefault();
+                showRegisterPage();
+            });
+            document.getElementById('showLogin').addEventListener('click', function(e) {
+                e.preventDefault();
+                showLoginPage();
+            });
+            document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+            
+            const darkSwitch = document.getElementById('darkModeSwitch');
+            if (darkSwitch) {
+                darkSwitch.addEventListener('change', toggleDarkMode);
+            }
+            
+            loadDarkMode();
+        }
+
+        window.onload = function() {
+            initApp();
+        };
     </script>
 </body>
 </html>
