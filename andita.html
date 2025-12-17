@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Music - Stream 100+ Million Songs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #fa2d48;
+            --secondary-color: #fc6076;
+            --dark-bg: #000000;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a0a0f 50%, #000000 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Liquid Glass Effect */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(250, 45, 72, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(250, 45, 72, 0.25);
+        }
+
+        /* Loading Animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #1a0a0f 50%, #000000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .music-loader {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .bar {
+            width: 8px;
+            height: 40px;
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+            animation: pulse 0.8s ease-in-out infinite;
+        }
+
+        .bar:nth-child(2) { animation-delay: 0.2s; }
+        .bar:nth-child(3) { animation-delay: 0.4s; }
+        .bar:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes pulse {
+            0%, 100% { height: 20px; }
+            50% { height: 60px; }
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary) !important;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px !important;
+            border-radius: 10px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            background: var(--glass-bg);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(250, 45, 72, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        /* Buttons */
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(250, 45, 72, 0.4);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 30px rgba(250, 45, 72, 0.6);
+        }
+
+        /* Auth Forms */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .auth-card {
+            max-width: 450px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-color);
+            color: var(--text-primary);
+            box-shadow: 0 0 0 3px rgba(250, 45, 72, 0.2);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Music Cards */
+        .music-card {
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .album-art {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .music-card:hover .album-art {
+            transform: scale(1.05);
+        }
+
+        .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .music-card:hover .play-btn {
+            opacity: 1;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Player Bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 30px;
+            z-index: 1000;
+        }
+
+        .progress-bar-custom {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Profile Section */
+        .profile-header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 32px rgba(250, 45, 72, 0.3);
+        }
+
+        /* Stats Card */
+        .stats-card {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .stats-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .auth-card {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Hidden Class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Toast Notification */
+        .toast-custom {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            z-index: 9999;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="music-loader">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showHome()">
+                <i class="fab fa-apple"></i> Music
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border: 1px solid rgba(255,255,255,0.1);">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showHome()"><i class="fas fa-home me-2"></i>Home</a>
+                    </li>
+                    <li class="nav-item" id="navProfile">
+                        <a class="nav-link" href="#" onclick="showProfile()"><i class="fas fa-user me-2"></i>Profile</a>
+                    </li>
+                    <li class="nav-item" id="navLogin">
+                        <a class="nav-link" href="#" onclick="showLogin()"><i class="fas fa-sign-in-alt me-2"></i>Login</a>
+                    </li>
+                    <li class="nav-item" id="navLogout">
+                        <a class="nav-link" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="homePage" class="page">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <h1 class="hero-title">100+ Million Songs</h1>
+                <p class="hero-subtitle">Stream music with lossless audio quality. No ads, just music.</p>
+                <button class="btn btn-primary-custom" onclick="showRegister()">
+                    <i class="fas fa-play me-2"></i>Start Free Trial
+                </button>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="container">
+                <h2 class="text-center mb-5" style="font-size: 3rem; font-weight: 700;">Why Apple Music?</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="glass-card p-4 text-center h-100">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <h4>100+ Million Songs</h4>
+                            <p class="text-secondary">Access the world's largest music library with every genre imaginable</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-card p-4 text-center h-100">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-volume-up"></i>
+                            </div>
+                            <h4>Lossless Audio</h4>
+                            <p class="text-secondary">Experience studio-quality sound with spatial audio support</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-card p-4 text-center h-100">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <h4>Download & Listen Offline</h4>
+                            <p class="text-secondary">Take your music anywhere, even without internet connection</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-card p-4 text-center h-100">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            <h4>Real-Time Lyrics</h4>
+                            <p class="text-secondary">Sing along with live lyrics and karaoke mode</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-card p-4 text-center h-100">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4>Family & Student Plans</h4>
+                            <p class="text-secondary">Special pricing for families and students</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-card p-4 text-center h-100">
+                            <div class="feature-icon mx-auto">
+                                <i class="fas fa-ban"></i>
+                            </div>
+                            <h4>Zero Ads</h4>
+                            <p class="text-secondary">Enjoy uninterrupted music streaming experience</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Music -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="mb-4" style="font-size: 2.5rem; font-weight: 700;">Trending Now</h2>
+                <div class="row g-4">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="glass-card music-card">
+                            <img src="https://picsum.photos/400/400?random=1" alt="Album" class="album-art">
+                            <div class="play-btn">
+                                <i class="fas fa-play" style="color: white; font-size: 1.5rem; margin-left: 5px;"></i>
+                            </div>
+                            <h5>Summer Vibes</h5>
+                            <p class="text-secondary mb-0">Pop Hits</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="glass-card music-card">
+                            <img src="https://picsum.photos/400/400?random=2" alt="Album" class="album-art">
+                            <div class="play-btn">
+                                <i class="fas fa-play" style="color: white; font-size: 1.5rem; margin-left: 5px;"></i>
+                            </div>
+                            <h5>Chill Beats</h5>
+                            <p class="text-secondary mb-0">Lo-fi & Chill</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="glass-card music-card">
+                            <img src="https://picsum.photos/400/400?random=3" alt="Album" class="album-art">
+                            <div class="play-btn">
+                                <i class="fas fa-play" style="color: white; font-size: 1.5rem; margin-left: 5px;"></i>
+                            </div>
+                            <h5>Workout Mix</h5>
+                            <p class="text-secondary mb-0">Energy Boost</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="glass-card music-card">
+                            <img src="https://picsum.photos/400/400?random=4" alt="Album" class="album-art">
+                            <div class="play-btn">
+                                <i class="fas fa-play" style="color: white; font-size: 1.5rem; margin-left: 5px;"></i>
+                            </div>
+                            <h5>Night Jazz</h5>
+                            <p class="text-secondary mb-0">Smooth Jazz</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-5 mb-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="glass-card stats-card">
+                            <div class="stats-number">100M+</div>
+                            <p class="text-secondary mb-0">Songs Available</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-card stats-card">
+                            <div class="stats-number">165</div>
+                            <p class="text-secondary mb-0">Countries</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-card stats-card">
+                            <div class="stats-number">1M+</div>
+                            <p class="text-secondary mb-0">Artists</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="page hidden">
+        <div class="auth-container">
+            <div class="glass-card auth-card">
+                <div class="text-center mb-4">
+                    <h2 class="mb-2"><i class="fab fa-apple"></i> Music</h2>
+                    <p class="text-secondary">Welcome back! Login to continue</p>
+                </div>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">
+                            Remember me
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </button>
+                    <div class="text-center">
+                        <a href="#" class="text-decoration-none" style="color: var(--primary-color);" onclick="showForgotPassword()">Forgot Password?</a>
+                    </div>
+                    <hr style="border-color: rgba(255,255,255,0.1);">
+                    <div class="text-center">
+                        <span class="text-secondary">Don't have an account? </span>
+                        <a href="#" class="text-decoration-none" style="color: var(--primary-color);" onclick="showRegister()">Register</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Page -->
+    <div id="registerPage" class="page hidden">
+        <div class="auth-container">
+            <div class="glass-card auth-card">
+                <div class="text-center mb-4">
+                    <h2 class="mb-2"><i class="fab fa-apple"></i> Music</h2>
+                    <p class="text-secondary">Create your account</p>
+                </div>
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="registerName" placeholder="John Doe" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="registerEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password (min. 6 characters)</label>
+                        <input type="password" class="form-control" id="registerPassword" placeholder="••••••••" minlength="6" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="registerConfirmPassword" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">
+                        <i class="fas fa-user-plus me-2"></i>Create Account
+                    </button>
+                    <hr style="border-color: rgba(255,255,255,0.1);">
+                    <div class="text-center">
+                        <span class="text-secondary">Already have an account? </span>
+                        <a href="#" class="text-decoration-none" style="color: var(--primary-color);" onclick="showLogin()">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Page -->
+    <div id="forgotPasswordPage" class="page hidden">
+        <div class="auth-container">
+            <div class="glass-card auth-card">
+                <div class="text-center mb-4">
+                    <h2 class="mb-2"><i class="fas fa-key"></i> Reset Password</h2>
+                    <p class="text-secondary">Enter your email to reset password</p>
+                </div>
+                <form id="forgotPasswordForm" onsubmit="handleForgotPassword(event)">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="forgotEmail" placeholder="your@email.com" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">
+                        <i class="fas fa-paper-plane me-2"></i>Send Reset Link
+                    </button>
+                    <div class="text-center">
+                        <a href="#" class="text-decoration-none" style="color: var(--primary-color);" onclick="showLogin()">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Login
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profilePage" class="page hidden">
+        <div class="container py-5" style="margin-top: 80px;">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="glass-card p-4">
+                        <div class="profile-header">
+                            <div class="profile-avatar" id="profileAvatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h2 id="profileName">User Name</h2>
+                            <p class="text-secondary" id="profileEmail">user@email.com</p>
+                        </div>
+                        
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <div class="glass-card p-3 text-center">
+                                    <h4 class="mb-0" style="color: var(--primary-color);">247</h4>
+                                    <small class="text-secondary">Songs Saved</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="glass-card p-3 text-center">
+                                    <h4 class="mb-0" style="color: var(--primary-color);">18</h4>
+                                    <small class="text-secondary">Playlists</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="glass-card p-3 text-center">
+                                    <h4 class="mb-0" style="color: var(--primary-color);">1,234</h4>
+                                    <small class="text-secondary">Hours Listened</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4 class="mb-3">Account Information</h4>
+                            <form id="editProfileForm" onsubmit="handleEditProfile(event)">
+                                <div class="mb-3">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="editName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="editEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">New Password (leave blank to keep current)</label>
+                                    <input type="password" class="form-control" id="editPassword" minlength="6" placeholder="••••••••">
+                                </div>
+                                <button type="submit" class="btn
