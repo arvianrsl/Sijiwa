@@ -1,4 +1,4 @@
-const CACHE_NAME = "pwa-template-v2";
+const CACHE_NAME = "Sijiwa";
 const BASE_URL = self.registration.scope;
 
 const urlsToCache = [
@@ -7,8 +7,8 @@ const urlsToCache = [
   `${BASE_URL}offline.html`,
   `${BASE_URL}assets/style.css`,
   `${BASE_URL}manifest.json`,
-  `${BASE_URL}icons/icon-192x192.png`,
-  `${BASE_URL}icons/icon-512x512.png`,
+  `${BASE_URL}logo sijiwa 192x192.png`,
+  `${BASE_URL}logo sijiwa.png`,
 ];
 
 // Install Service Worker & simpan file ke cache
