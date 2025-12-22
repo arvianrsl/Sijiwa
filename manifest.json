@@ -1,23 +1,23 @@
 {
   "id": "./",
-  "name": "Sijiwa",
+  "name": "Sijiwa App",
   "short_name": "Sijiwa",
   "description": "Sijiwa adalah aplikasi kesehatan mental yang dirancang untuk membantu pengguna menjaga keseimbangan emosi dan memahami diri sendiri. Aplikasi ini cocok untuk semua kalangan, terutama remaja dan mahasiswa, serta pengguna dengan gangguan bipolar. Tujuannya adalah menyediakan ruang aman untuk mengelola stres dan menenangkan pikiran.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#E5E1D0",
-  "theme_color": "#4F46E5",
+  "background_color": "#FFFAFA",
+  "theme_color": "#00BFFF",
   "orientation": "portrait",
   "lang": "id",
   "icons": [
     {
-      "src": "icons/icon-192x192-A.png",
+      "src": "/icons/logo-sijiwa-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icons/icon-512x512-B.png",
+      "src": "/icons/logo-sijiwa-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
