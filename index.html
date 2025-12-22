@@ -1234,6 +1234,13 @@
         window.onload = function() {
             initApp();
         };
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+            .then(() => console.log('SW registered!'))
+            .catch(err => console.log('SW registration failed: ', err));
+        }
     </script>
 </body>
 </html>
