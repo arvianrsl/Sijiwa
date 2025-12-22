@@ -41,7 +41,7 @@
       "url": "./index.html",
       "icons": [
         {
-          "src": "icons/logo-sijiwa-192.png",
+          "src": "assets/sijiwa192.png",
           "sizes": "192x192"
         }
       ]
