@@ -5,7 +5,7 @@
   "description": "Sijiwa adalah aplikasi kesehatan mental yang dirancang untuk membantu pengguna menjaga keseimbangan emosi dan memahami diri sendiri. Aplikasi ini cocok untuk semua kalangan, terutama remaja dan mahasiswa, serta pengguna dengan gangguan bipolar. Tujuannya adalah menyediakan ruang aman untuk mengelola stres dan menenangkan pikiran.",
   "start_url": "./index.html",
   "scope": "./",
-  "display": "standalone",
+  "display": "Fullscreen",
   "background_color": "#FFFAFA",
   "theme_color": "#00BFFF",
   "orientation": "portrait",
